@@ -46,9 +46,17 @@ def test_login(browser, username, password, expected, desc):
     pass_input.send_keys(Keys.RETURN)
     time.sleep(2)
 
+
+
+    current_url = browser.current_url.lower()
+
+    # In ra thông tin test
+    print(f"\n[Test case]: {desc}")
+    print(f"[Username]: {username} | [Password]: {password}")
+    print(f"[Expected]: {'Đăng nhập thành công' if expected else 'Đăng nhập thất bại'}")
+    print(f"[Actual URL]: {current_url}")
+
     if expected:
-        # Khi đăng nhập thành công -> chuyển hướng đến index/dashboard
-        assert "index" in browser.current_url.lower(), f"Fail: {desc}"
+        assert "index" in current_url, f"Fail: {desc}"
     else:
-        # Khi thất bại -> vẫn ở login hoặc có thông báo lỗi
-        assert "login" in browser.current_url.lower(), f"Fail: {desc}"
+        assert "login" in current_url, f"Fail: {desc}"
