@@ -66,10 +66,10 @@ python app.py
 ```
 
 - Sau khi chạy, truy cập vào địa chỉ `http://localhost:5000` (hoặc cổng khác nếu được cấu hình) trên trình duyệt để xem giao diện.
-- Giao diện sẽ hiển thị danh sách các test case được load từ file JSON (ví dụ: `challenges.json`), như được định nghĩa trong template `datatables.html`.
+- Giao diện sẽ hiển thị danh sách các test case được load từ file JSON (ví dụ: `challenge_test_data.json`), như được định nghĩa trong template `datatables.html`.
 
 ## Lưu ý
-- **File JSON**: Đảm bảo file `challenges.json` (hoặc file dữ liệu tương ứng) nằm trong thư mục `static/` và có định dạng đúng như sau:
+- **File JSON**: Đảm bảo file `challenge_test_data.json` (hoặc file dữ liệu tương ứng) nằm trong thư mục `tests/data/` và có định dạng đúng như sau:
   ```json
   [
     {
@@ -97,13 +97,6 @@ python app.py
 - **Lỗi chạy test**: Nếu Pytest báo lỗi liên quan đến Selenium, hãy kiểm tra xem driver trình duyệt có được cài đặt đúng và tương thích với phiên bản trình duyệt hay không.
 - **Lỗi chạy Flask**: Nếu không truy cập được `http://localhost:5000`, kiểm tra xem file `app.py` có lỗi cú pháp hoặc file `challenges.json` có tồn tại và đúng định dạng hay không.
 
-## Đóng góp
-Nếu bạn muốn đóng góp vào dự án, hãy:
-1. Fork repository.
-2. Tạo nhánh mới (`git checkout -b feature/ten-nhanh`).
-3. Commit các thay đổi (`git commit -m 'Mô tả thay đổi'`).
-4. Push nhánh (`git push origin feature/ten-nhanh`).
-5. Tạo Pull Request trên GitHub.
 
 ## Liên hệ
 Nếu có câu hỏi hoặc cần hỗ trợ, vui lòng mở issue trên GitHub hoặc liên hệ với nhóm phát triển.
