@@ -1,0 +1,126 @@
+{
+  "add_user": [
+    {
+      "username": "",
+      "password": "abc123",
+      "role": "user",
+      "expected": "error",
+      "desc": "TC01_Thêm user - bỏ trống username"
+    },
+    {
+      "username": "ab",
+      "password": "abc123a",
+      "role": "user",
+      "expected": "error",
+      "desc": "TC02_Thêm user - username quá ngắn"
+    },
+    {
+      "username": "abcdefghijklmnopqrstu",
+      "password": "abc123",
+      "role": "user",
+      "expected": "error",
+      "desc": "TC03_Thêm user - username quá dài"
+    },
+    {
+      "username": "user@123",
+      "password": "abc123",
+      "role": "user",
+      "expected": "error",
+      "desc": "TC04_Thêm user - username chứa ký tự đặc biệt"
+    },
+    {
+      "username": "admin",
+      "password": "abc123",
+      "role": "user",
+      "expected": "error",
+      "desc": "TC05_Thêm user - username đã tồn tại"
+    },
+    {
+      "username": "newuser",
+      "password": "",
+      "role": "user",
+      "expected": "error",
+      "desc": "TC06_Thêm user - bỏ trống password"
+    },
+    {
+      "username": "newuser",
+      "password": "12345",
+      "role": "user",
+      "expected": "error",
+      "desc": "TC07_Thêm user - password quá ngắn"
+    },
+    {
+      "username": "user123",
+      "password": "Hutechnhom2123",
+      "role": "user",
+      "expected": "success",
+      "desc": "TC08_Thêm user - hợp lệ (role user)"
+    },
+    {
+      "username": "admin2",
+      "password": "Hutechnhom2123",
+      "role": "admin",
+      "expected": "success",
+      "desc": "TC09_Thêm user - hợp lệ (role admin)"
+    }
+  ],
+  "edit_user": [
+    {
+      "username": "",
+      "password": "newpass123",
+      "role": "user",
+      "expected": "error",
+      "desc": "TC10_Sửa user - bỏ trống username"
+    },
+    {
+      "username": "user123",
+      "password": "12345",
+      "role": "user",
+      "expected": "error",
+      "desc": "TC11_Sửa user - password quá ngắn"
+    },
+    {
+      "username": "testcaseedit",
+      "password": "",
+      "role": "user",
+      "expected": "success",
+      "desc": "TC12_Sửa user - bỏ trống password (hợp lệ)"
+    },
+    {
+      "username": "user_updated",
+      "password": "newpass123",
+      "role": "user",
+      "expected": "success",
+      "desc": "TC13_Sửa user - cập nhật hợp lệ"
+    },
+    {
+      "username": "member1",
+      "password": "",
+      "role": "admin",
+      "expected": "success",
+      "desc": "TC14_Sửa user - cập nhật role thành admin"
+    }
+  ],
+  "delete_user": [
+    {
+      "scenario": "not_exist",
+      "user_id": 999999,
+      "expected": "Người dùng không tồn tại",
+      "desc": "TC15_Xóa user - user không tồn tại"
+    },
+    {
+      "scenario": "self_delete",
+      "username": "admin",
+      "page_number": 1,
+      "expected": "Không thể xóa tài khoản đang đăng nhập",
+      "desc": "TC16_Xóa user - không thể tự xóa chính mình"
+    },
+    {
+      "scenario": "valid_delete",
+      "username": "TC_Userdelete",
+      "page_number": 2,
+      "expected": "Xóa người dùng thành công",
+      "desc": "TC17_Xóa user - thành công"
+    }
+  ]
+}

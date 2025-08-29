@@ -1,0 +1,56 @@
+
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Challenge Test Data</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header class="header">
+            <h1>Danh sách Challenge Test Data</h1>
+        </header>
+        
+        <div class="table-wrapper">
+            <table class="data-table">
+                <thead>
+                    <tr>
+                        <th>Section</th>
+                        <th>Mã Test</th>
+                        <th>Title</th>
+                        <th>Description</th>
+                        <th>Guide</th>
+                        <th>Points</th>
+                        <th>Public</th>
+                        <th>Kết quả mong đợi</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in rows %}
+                    <tr class="{{ row.expected }}">
+                        <td>{{ row.section }}</td>
+                        <td>{{ row.desc }}</td>
+                        <td>{{ row.title }}</td>
+                        <td>{{ row.description }}</td>
+                        <td>{{ row.guide }}</td>
+                        <td>{{ row.points }}</td>
+                        <td>
+                            {% if row.public == 'Yes' or row.public == 'true' %}
+                                <span class="public-yes">Public</span>
+                            {% else %}
+                                <span class="public-no">Private</span>
+                            {% endif %}
+                        </td>
+                        <td>{{ row.expected }}</td>
+                    </tr>
+                    {% endfor %}
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+
+</body>
+</html>

@@ -1,0 +1,64 @@
+{
+  "login": [
+    {
+      "username": "admin",
+      "password": "SmartPro@123",
+      "expected": true,
+      "desc": "TC01_Đăng nhập thành công"
+    },
+    {
+      "username": "TC02_admin",
+      "password": "TC02_sai_password",
+      "expected": false,
+      "desc": "TC02_Sai mật khẩu"
+    },
+    {
+      "username": "TC03_sai_admin",
+      "password": "TC03_SmartPro@123",
+      "expected": false,
+      "desc": "TC03_Sai username"
+    },
+    {
+      "username": "TC04_fakeuser",
+      "password": "TC04_fakepass",
+      "expected": false,
+      "desc": "TC04_Sai cả username và password"
+    },
+    {
+      "username": "",
+      "password": "TC05_SmartPro@123",
+      "expected": false,
+      "desc": "TC05_trống username"
+    },
+    {
+      "username": "TC06_admin",
+      "password": "",
+      "expected": false,
+      "desc": "TC06_Bỏ trống password"
+    },
+    {
+      "username": "",
+      "password": "",
+      "expected": false,
+      "desc": "TC07_Bỏ trống cả 2"
+    },
+    {
+      "username": "TC08_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "password": "TC08_SmartPro@123",
+      "expected": false,
+      "desc": "TC08_Username quá dài"
+    },
+    {
+      "username": "TC09_admin",
+      "password": "TC09_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "expected": false,
+      "desc": "TC09_Password quá dài"
+    },
+    {
+      "username": "TC010_admin' OR '1'='1",
+      "password": "TC10_abc123",
+      "expected": false,
+      "desc": "TC10_Thử SQL injection"
+    }
+  ]
+}

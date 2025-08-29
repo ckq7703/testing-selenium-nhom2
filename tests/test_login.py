@@ -1,35 +1,22 @@
 import pytest
+import json
+import time
 from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
-import time
 
 URL = "https://submit.smartpro.edu.vn/login.php"
 
-# Các bộ dữ liệu test
-test_data = [
-    # 1. Hợp lệ
-    ("admin", "SmartPro@123", True, "Đăng nhập thành công"),
-    
-    # 2-4. Sai thông tin
-    ("admin", "sai_password", False, "Sai mật khẩu"),
-    ("sai_admin", "SmartPro@123", False, "Sai username"),
-    ("fakeuser", "fakepass", False, "Sai cả username và password"),
+from utils import load_test_data  # <-- import hàm đọc json
 
-    # 5-7. Trường trống
-    ("", "SmartPro@123", False, "Bỏ trống username"),
-    ("admin", "", False, "Bỏ trống password"),
-    ("", "", False, "Bỏ trống cả 2"),
+login_data = load_test_data("login_test_data.json")["login"]
 
-    # 8-9. Độ dài
-    ("a" * 256, "SmartPro@123", False, "Username quá dài"),
-    ("admin", "a" * 256, False, "Password quá dài"),
+@pytest.mark.parametrize("data", login_data)
+def test_login(browser, data):
+    username = data["username"]
+    password = data["password"]
+    expected = data["expected"]
+    desc = data["desc"]
 
-    # 10. Ký tự đặc biệt
-    ("admin' OR '1'='1", "abc123", False, "Thử SQL injection"),
-]
-
-@pytest.mark.parametrize("username,password,expected,desc", test_data)
-def test_login(browser, username, password, expected, desc):
     browser.get(URL)
 
     # Điền username
@@ -45,8 +32,6 @@ def test_login(browser, username, password, expected, desc):
     # Submit form
     pass_input.send_keys(Keys.RETURN)
     time.sleep(2)
-
-
 
     current_url = browser.current_url.lower()
 

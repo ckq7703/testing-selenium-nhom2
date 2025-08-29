@@ -1,0 +1,166 @@
+{
+  "add_challenge": [
+    {
+      "desc": "TC01_Thiếu tiêu đề",
+      "title": "",
+      "description": "TC01_Một thử thách nhỏ",
+      "guide": "TC01_Hướng dẫn cơ bản",
+      "points": "100",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC02_Tiêu đề quá dài",
+      "title": { "text": "TC02_title", "repeat": 101 },
+      "description": "TC02_Một thử thách nhỏ",
+      "guide": "TC02_Hướng dẫn cơ bản",
+      "points": "100",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC03_Thiếu mô tả",
+      "title": "TC03_Challenge 1",
+      "description": "",
+      "guide": "TC03_Hướng dẫn cơ bản",
+      "points": "100",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC04_Mô tả quá dài",
+      "title": "TC04_Challenge 2",
+      "description": { "text": "TC04_desc", "repeat": 1001 },
+      "guide": "TC04_Hướng dẫn cơ bản",
+      "points": "100",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC05_Điểm số = 0",
+      "title": "TC05_Challenge 3",
+      "description": "TC05_Mô tả hợp lệ",
+      "guide": "TC05_Hướng dẫn cơ bản",
+      "points": "0",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC06_Điểm số quá lớn",
+      "title": "TC06_Challenge 4",
+      "description": "TC06_Mô tả hợp lệ",
+      "guide": "TC06_Hướng dẫn cơ bản",
+      "points": "1001",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC07_Thêm hợp lệ (ẩn)",
+      "title": "TC07_Challenge Hidden",
+      "description": "TC07_Mô tả hợp lệ",
+      "guide": "TC07_Hướng dẫn cơ bản",
+      "points": "100",
+      "public": false,
+      "expected": "success"
+    },
+    {
+      "desc": "TC08_Thêm hợp lệ (công khai)",
+      "title": "TC08_Challenge Public",
+      "description": "TC08_Mô tả hợp lệ",
+      "guide": "TC08_Hướng dẫn cơ bản",
+      "points": "100",
+      "public": true,
+      "expected": "success"
+    }
+  ],
+
+  "edit_challenge": [
+    {
+      "desc": "TC09_Sửa với tiêu đề rỗng",
+      "title": "",
+      "description": "TC09_New description",
+      "guide": "TC09_New guide",
+      "points": "100",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC10_Sửa với tiêu đề quá dài",
+      "title": { "text": "TC10_title", "repeat": 101 },
+      "description": "TC10_New description",
+      "guide": "TC10_New guide",
+      "points": "100",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC11_Sửa với mô tả rỗng",
+      "title": "TC11_Edited Challenge",
+      "description": "",
+      "guide": "TC11_New guide",
+      "points": "100",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC12_Sửa với mô tả quá dài",
+      "title": "TC12_Edited Challenge",
+      "description": { "text": "TC12_desc", "repeat": 1001 },
+      "guide": "TC12_New guide",
+      "points": "100",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC13_Sửa với điểm = 0",
+      "title": "TC13_Edited Challenge",
+      "description": "TC13_New description",
+      "guide": "TC13_New guide",
+      "points": "0",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC14_Sửa với điểm quá lớn",
+      "title": "TC14_Edited Challenge",
+      "description": "TC14_New description",
+      "guide": "TC14_New guide",
+      "points": "1001",
+      "public": false,
+      "expected": "error"
+    },
+    {
+      "desc": "TC15_Sửa hợp lệ (ẩn)",
+      "title": "TC15_Updated Hidden",
+      "description": "TC15_Updated description",
+      "guide": "TC15_Updated guide",
+      "points": "200",
+      "public": false,
+      "expected": "success"
+    },
+    {
+      "desc": "TC16_Sửa hợp lệ (công khai)",
+      "title": "TC16_Updated Public",
+      "description": "TC16_Updated description",
+      "guide": "TC16_Updated guide",
+      "points": "200",
+      "public": true,
+      "expected": "success"
+    }
+  ],
+
+  "delete_challenge": [
+    {
+      "desc": "TC17_Xóa challenge không tồn tại",
+      "scenario": "not_exist",
+      "challenge_id": 99999,
+      "expected": "Thử thách không tồn tại"
+    },
+    {
+      "desc": "TC18_Xóa challenge hợp lệ",
+      "scenario": "valid_delete",
+      "challenge_id": 114,
+      "expected": "Xóa thử thách thành công"
+    }
+  ]
+}

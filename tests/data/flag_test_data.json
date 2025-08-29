@@ -1,0 +1,110 @@
+{
+  "add_flag": [
+    {
+      "desc": "TC01_Thêm flag rỗng",
+      "challenge_title": "TC01_Challenge 1",
+      "flag_value": "",
+      "description": "TC01_desc",
+      "is_image": false,
+      "image_path": null,
+      "expected": "error"
+    },
+    {
+      "desc": "TC02_Mô tả quá dài khi thêm flag",
+      "challenge_title": "TC02_Challenge 1",
+      "flag_value": "TC02_flag123",
+      "description": { "text": "TC02_desc", "repeat": 1001 },
+      "is_image": false,
+      "image_path": null,
+      "expected": "error"
+    },
+    {
+      "desc": "TC03_File không hợp lệ khi thêm flag ảnh",
+      "challenge_title": "TC03_Challenge 1",
+      "flag_value": "TC03_flag123",
+      "description": "TC03_desc",
+      "is_image": true,
+      "image_path": "D:/Web/testting/NHOM2/invalid_file.txt",
+      "expected": "error"
+    },
+    {
+      "desc": "TC04_Thêm flag hợp lệ (text)",
+      "challenge_title": "TC04_Challenge 1",
+      "flag_value": "TC04_flag123",
+      "description": "TC04_desc",
+      "is_image": false,
+      "image_path": null,
+      "expected": "success"
+    },
+    {
+      "desc": "TC05_Thêm flag hợp lệ (ảnh)",
+      "challenge_title": "TC05_Challenge 1",
+      "flag_value": "TC05_flag123",
+      "description": "TC05_desc",
+      "is_image": true,
+      "image_path": "D:/Web/testting/NHOM2/flag-image.png",
+      "expected": "success"
+    }
+  ],
+  "edit_flag": [
+    {
+      "desc": "TC06_Sửa flag thành rỗng",
+      "challenge_title": "TC06_Challenge 1",
+      "flag_value": "",
+      "description": "TC06_newdesc",
+      "is_image": false,
+      "image_path": null,
+      "expected": "error"
+    },
+    {
+      "desc": "TC07_Mô tả quá dài khi sửa flag",
+      "challenge_title": "TC07_Challenge 1",
+      "flag_value": "TC07_newflag",
+      "description": { "text": "TC07_desc", "repeat": 1001 },
+      "is_image": false,
+      "image_path": null,
+      "expected": "error"
+    },
+    {
+      "desc": "TC08_File không hợp lệ khi sửa flag ảnh",
+      "challenge_title": "TC08_Challenge 1",
+      "flag_value": "TC08_newflag",
+      "description": "TC08_newdesc",
+      "is_image": true,
+      "image_path": "D:/Web/testting/NHOM2/invalid_file.txt",
+      "expected": "error"
+    },
+    {
+      "desc": "TC09_Sửa flag hợp lệ (text)",
+      "challenge_title": "TC09_Challenge 1",
+      "flag_value": "TC09_updated_flag",
+      "description": "TC09_updated_desc",
+      "is_image": false,
+      "image_path": null,
+      "expected": "success"
+    },
+    {
+      "desc": "TC10_Sửa flag hợp lệ (ảnh)",
+      "challenge_title": "TC10_Challenge 1",
+      "flag_value": "TC10_updated_flag",
+      "description": "TC10_updated_desc",
+      "is_image": true,
+      "image_path": "D:/Web/testting/NHOM2/flag-image.png",
+      "expected": "success"
+    }
+  ],
+  "delete_flag": [
+    {
+      "desc": "TC11_Xóa flag không tồn tại",
+      "scenario": "not_exist",
+      "flag_id": 99999,
+      "expected": "Flag không tồn tại"
+    },
+    {
+      "desc": "TC12_Xóa flag hợp lệ",
+      "scenario": "valid_delete",
+      "flag_id": 76,
+      "expected": "Xóa Flag thành công"
+    }
+  ]
+}

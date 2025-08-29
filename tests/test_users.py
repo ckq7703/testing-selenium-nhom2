@@ -5,7 +5,8 @@ from selenium.webdriver.common.by import By
 from selenium.webdriver.common.keys import Keys
 from selenium.webdriver.support.ui import WebDriverWait
 from selenium.webdriver.support import expected_conditions as EC
-from selenium.common.exceptions import TimeoutException, NoSuchElementException
+
+from utils import load_test_data  # <-- import hàm đọc json
 
 BASE_URL = "https://submit.smartpro.edu.vn/login.php"
 USERNAME = "admin"
@@ -16,8 +17,6 @@ PASSWORD = "SmartPro@123"
 def browser():
     driver = webdriver.Chrome()
     driver.maximize_window()
-
-    # --- Đăng nhập ---
     driver.get(BASE_URL)
     driver.find_element(By.ID, "username").send_keys(USERNAME)
     driver.find_element(By.ID, "password").send_keys(PASSWORD + Keys.RETURN)
@@ -61,43 +60,32 @@ def get_swal_text(driver):
     return swal.text
 
 
-@pytest.mark.parametrize("username,password,role,expected", [
-    # --- Thêm user ---
-    ("", "abc123", "user", "error"),               # rỗng username
-    ("ab", "abc123", "user", "error"),             # username ngắn
-    ("abcdefghijklmnopqrstu", "abc123", "user", "error"),  # quá dài
-    ("user@123", "abc123", "user", "error"),       # ký tự đặc biệt
-    ("admin", "abc123", "user", "error"),          # trùng username
-    ("newuser", "", "user", "error"),              # rỗng password
-    ("newuser", "12345", "user", "error"),         # pass ngắn
-    ("user123", "Hutechnhom2123", "user", "success"),      # hợp lệ role=user
-    ("admin2", "Hutechnhom2123", "admin", "success"),     # hợp lệ role=admin
-])
-def test_add_user(browser, username, password, role, expected):
+# --- Load dữ liệu JSON ---
+user_test_data = load_test_data("user_test_data.json")
+
+
+@pytest.mark.parametrize("data", user_test_data["add_user"])
+def test_add_user(browser, data):
     open_users_page(browser)
     open_add_user_modal(browser)
-    fill_add_user_form(browser, username, password, role)
+    fill_add_user_form(browser, data["username"], data["password"], data["role"])
 
-    submit_btn = browser.find_element(By.NAME, "add_user")
-    submit_btn.click()
+    browser.find_element(By.NAME, "add_user").click()
     time.sleep(1)
 
     text = get_swal_text(browser)
-    # In ra kết quả mong đợi và thực tế
-    print(f"[kẾT QUẢ MONG ĐỢI]: {expected}")
-    print(f"[kẾT QUẢ THỰC TẾ]: {text}")
-    
-    if expected == "success":
+    print(f"[MONG ĐỢI]: {data['expected']}")
+    print(f"[THỰC TẾ]: {text}")
+
+    if data["expected"] == "success":
         assert "Thêm người dùng thành công" in text
     else:
-        assert "Lỗi" in text or "Vui lòng kiểm tra" in text or "Username đã tồn tại" in text
+        assert ("Lỗi" in text or "Vui lòng kiểm tra" in text or "Username đã tồn tại" in text)
 
-    # reset
     open_users_page(browser)
 
 
 def open_edit_user_modal(driver, user_row_index=1):
-    """Mặc định mở modal chỉnh sửa user đầu tiên trong bảng (không phải admin)."""
     edit_icons = WebDriverWait(driver, 10).until(
         EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".edit-icon"))
     )
@@ -120,29 +108,20 @@ def fill_edit_user_form(driver, username, password, role):
     role_select.send_keys(role)
 
 
-@pytest.mark.parametrize("username,password,role,expected", [
-    ("", "newpass123", "user", "error"),           # username rỗng
-    ("user123", "12345", "user", "error"),         # pass ngắn
-    ("testcaseedit", "", "user", "success"),          # chỉ đổi role
-    ("user_updated", "newpass123", "user", "success"), # đổi user/pass
-    ("member1", "", "admin", "success"),           # đổi role admin
-])
-def test_edit_user(browser, username, password, role, expected):
+@pytest.mark.parametrize("data", user_test_data["edit_user"])
+def test_edit_user(browser, data):
     open_users_page(browser)
     open_edit_user_modal(browser)
 
-    fill_edit_user_form(browser, username, password, role)
-
-    submit_btn = browser.find_element(By.NAME, "update_user")
-    submit_btn.click()
+    fill_edit_user_form(browser, data["username"], data["password"], data["role"])
+    browser.find_element(By.NAME, "update_user").click()
     time.sleep(2)
 
-
     text = get_swal_text(browser)
-    # In ra kết quả mong đợi và thực tế
-    print(f"[kẾT QUẢ MONG ĐỢI]: {expected}")
-    print(f"[kẾT QUẢ THỰC TẾ]: {text}")
-    if expected == "success":
+    print(f"[MONG ĐỢI]: {data['expected']}")
+    print(f"[THỰC TẾ]: {text}")
+
+    if data["expected"] == "success":
         assert "Cập nhật người dùng thành công" in text
     else:
         assert "Lỗi" in text
@@ -151,7 +130,6 @@ def test_edit_user(browser, username, password, role, expected):
 
 
 def delete_user_by_name(driver, username, page_number=None):
-    # nếu chỉ định page thì đi thẳng tới đó
     if page_number:
         driver.get(f"https://submit.smartpro.edu.vn/users.php?page={page_number}")
 
@@ -171,32 +149,26 @@ def delete_user_by_name(driver, username, page_number=None):
     confirm_btn.click()
 
 
-
-@pytest.mark.parametrize("scenario,expected", [
-    ("not_exist", "Người dùng không tồn tại"),
-    ("self_delete", "Không thể xóa tài khoản đang đăng nhập"),
-    ("valid_delete", "Xóa người dùng thành công"),
-])
-def test_delete_user(browser, scenario, expected):
+@pytest.mark.parametrize("data", user_test_data["delete_user"])
+def test_delete_user(browser, data):
     open_users_page(browser)
+    scenario = data["scenario"]
 
     if scenario == "valid_delete":
-        # user nằm ở trang 2
-        delete_user_by_name(browser, "userdelete", page_number=2)
+        delete_user_by_name(browser, data["username"], page_number=data.get("page_number"))
         text = get_swal_text(browser)
         assert "Thành công" in text
 
     elif scenario == "self_delete":
-        # admin nằm ở trang 1
-        delete_user_by_name(browser, "admin", page_number=1)
+        delete_user_by_name(browser, data["username"], page_number=data.get("page_number"))
         text = get_swal_text(browser)
         assert "Không thể xóa" in text
 
     elif scenario == "not_exist":
-        browser.get("https://submit.smartpro.edu.vn/users.php?delete_user=999999")
+        browser.get(f"https://submit.smartpro.edu.vn/users.php?delete_user={data['user_id']}")
         text = get_swal_text(browser)
         assert "không tồn tại" in text
 
-    # In ra kết quả mong đợi và thực tế
-    print(f"[kẾT QUẢ MONG ĐỢI]: {expected}")
-    print(f"[kẾT QUẢ THỰC TẾ]: {text}")
+    print(f"[MONG ĐỢI]: {data['expected']}")
+    print(f"[THỰC TẾ]: {text}")
+
