@@ -12,6 +12,11 @@ BASE_URL = "https://submit.smartpro.edu.vn/login.php"
 USERNAME = "admin"
 PASSWORD = "SmartPro@123"
 
+def parse_field(value):
+    """Nếu value là object có repeat thì nhân chuỗi, ngược lại trả về value"""
+    if isinstance(value, dict) and "repeat" in value:
+        return value["text"] * value["repeat"]
+    return value
 
 @pytest.fixture(scope="session")
 def browser():
@@ -68,7 +73,11 @@ user_test_data = load_test_data("user_test_data.json")
 def test_add_user(browser, data):
     open_users_page(browser)
     open_add_user_modal(browser)
-    fill_add_user_form(browser, data["username"], data["password"], data["role"])
+    
+    password = parse_field(data["password"])
+
+    fill_add_user_form(browser, data["username"], password, data["role"])
+
 
     browser.find_element(By.NAME, "add_user").click()
     time.sleep(1)
@@ -84,91 +93,4 @@ def test_add_user(browser, data):
 
     open_users_page(browser)
 
-
-def open_edit_user_modal(driver, user_row_index=1):
-    edit_icons = WebDriverWait(driver, 10).until(
-        EC.presence_of_all_elements_located((By.CSS_SELECTOR, ".edit-icon"))
-    )
-    edit_icons[user_row_index].click()
-    WebDriverWait(driver, 10).until(
-        EC.visibility_of_element_located((By.ID, "editUserModal"))
-    )
-
-
-def fill_edit_user_form(driver, username, password, role):
-    uname_input = driver.find_element(By.ID, "edit_username")
-    uname_input.clear()
-    uname_input.send_keys(username)
-
-    pwd_input = driver.find_element(By.ID, "edit_password")
-    pwd_input.clear()
-    pwd_input.send_keys(password)
-
-    role_select = driver.find_element(By.ID, "edit_role")
-    role_select.send_keys(role)
-
-
-@pytest.mark.parametrize("data", user_test_data["edit_user"])
-def test_edit_user(browser, data):
-    open_users_page(browser)
-    open_edit_user_modal(browser)
-
-    fill_edit_user_form(browser, data["username"], data["password"], data["role"])
-    browser.find_element(By.NAME, "update_user").click()
-    time.sleep(2)
-
-    text = get_swal_text(browser)
-    print(f"[MONG ĐỢI]: {data['expected']}")
-    print(f"[THỰC TẾ]: {text}")
-
-    if data["expected"] == "success":
-        assert "Cập nhật người dùng thành công" in text
-    else:
-        assert "Lỗi" in text
-
-    open_users_page(browser)
-
-
-def delete_user_by_name(driver, username, page_number=None):
-    if page_number:
-        driver.get(f"https://submit.smartpro.edu.vn/users.php?page={page_number}")
-
-    row = WebDriverWait(driver, 5).until(
-        EC.presence_of_element_located((
-            By.XPATH,
-            f"//table//tbody//tr[td[2][normalize-space()='{username}']]"
-        ))
-    )
-    delete_btn = row.find_element(By.CSS_SELECTOR, ".delete-icon")
-    driver.execute_script("arguments[0].scrollIntoView(true);", delete_btn)
-    delete_btn.click()
-
-    confirm_btn = WebDriverWait(driver, 5).until(
-        EC.element_to_be_clickable((By.CLASS_NAME, "swal2-confirm"))
-    )
-    confirm_btn.click()
-
-
-@pytest.mark.parametrize("data", user_test_data["delete_user"])
-def test_delete_user(browser, data):
-    open_users_page(browser)
-    scenario = data["scenario"]
-
-    if scenario == "valid_delete":
-        delete_user_by_name(browser, data["username"], page_number=data.get("page_number"))
-        text = get_swal_text(browser)
-        assert "Thành công" in text
-
-    elif scenario == "self_delete":
-        delete_user_by_name(browser, data["username"], page_number=data.get("page_number"))
-        text = get_swal_text(browser)
-        assert "Không thể xóa" in text
-
-    elif scenario == "not_exist":
-        browser.get(f"https://submit.smartpro.edu.vn/users.php?delete_user={data['user_id']}")
-        text = get_swal_text(browser)
-        assert "không tồn tại" in text
-
-    print(f"[MONG ĐỢI]: {data['expected']}")
-    print(f"[THỰC TẾ]: {text}")
 

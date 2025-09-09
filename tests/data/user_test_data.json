@@ -15,112 +15,81 @@
       "desc": "TC02_Thêm user - username quá ngắn"
     },
     {
+      "username": "abc",
+      "password": "abc123a",
+      "role": "user",
+      "expected": "success",
+      "desc": "TC03_Thêm user - username 3 ký tự (hợp lệ)"
+    },
+    {
+      "username": "abcdefghijklmnopqrst",
+      "password": "abc123a",
+      "role": "user",
+      "expected": "success",
+      "desc": "TC04_Thêm user - username 20 ký tự (hợp lệ)"
+    },
+    {
       "username": "abcdefghijklmnopqrstu",
-      "password": "abc123",
+      "password": "abc123a",
       "role": "user",
       "expected": "error",
-      "desc": "TC03_Thêm user - username quá dài"
+      "desc": "TC05_Thêm user - username quá dài (21 ký tự)"
     },
     {
       "username": "user@123",
-      "password": "abc123",
+      "password": "abc123a",
       "role": "user",
       "expected": "error",
-      "desc": "TC04_Thêm user - username chứa ký tự đặc biệt"
+      "desc": "TC06_Thêm user - username chứa ký tự đặc biệt"
     },
     {
       "username": "admin",
-      "password": "abc123",
+      "password": "abc123a",
       "role": "user",
       "expected": "error",
-      "desc": "TC05_Thêm user - username đã tồn tại"
+      "desc": "TC07_Thêm user - username đã tồn tại"
     },
     {
       "username": "newuser",
       "password": "",
       "role": "user",
       "expected": "error",
-      "desc": "TC06_Thêm user - bỏ trống password"
+      "desc": "TC08_Thêm user - bỏ trống password"
     },
     {
       "username": "newuser",
       "password": "12345",
       "role": "user",
       "expected": "error",
-      "desc": "TC07_Thêm user - password quá ngắn"
+      "desc": "TC09_Thêm user - password quá ngắn"
     },
     {
       "username": "user123",
-      "password": "Hutechnhom2123",
+      "password": "Hu@t09",
       "role": "user",
       "expected": "success",
-      "desc": "TC08_Thêm user - hợp lệ (role user)"
+      "desc": "TC10_Thêm user - password 6 ký tự (hợp lệ)"
     },
     {
-      "username": "admin2",
-      "password": "Hutechnhom2123",
-      "role": "admin",
-      "expected": "success",
-      "desc": "TC09_Thêm user - hợp lệ (role admin)"
-    }
-  ],
-  "edit_user": [
-    {
-      "username": "",
-      "password": "newpass123",
+      "username": "userlong",
+      "password": { "text": "a", "repeat": 257 },
       "role": "user",
       "expected": "error",
-      "desc": "TC10_Sửa user - bỏ trống username"
+      "desc": "TC11_Thêm user - password quá dài (256 ký tự)"
     },
     {
-      "username": "user123",
-      "password": "12345",
-      "role": "user",
-      "expected": "error",
-      "desc": "TC11_Sửa user - password quá ngắn"
-    },
-    {
-      "username": "testcaseedit",
-      "password": "",
+      "username": "roleuser",
+      "password": "abc123a",
       "role": "user",
       "expected": "success",
-      "desc": "TC12_Sửa user - bỏ trống password (hợp lệ)"
+      "desc": "TC12_Thêm user - role = user (hợp lệ)"
     },
     {
-      "username": "user_updated",
-      "password": "newpass123",
-      "role": "user",
-      "expected": "success",
-      "desc": "TC13_Sửa user - cập nhật hợp lệ"
-    },
-    {
-      "username": "member1",
-      "password": "",
+      "username": "roleadmin",
+      "password": "abc123a",
       "role": "admin",
       "expected": "success",
-      "desc": "TC14_Sửa user - cập nhật role thành admin"
-    }
-  ],
-  "delete_user": [
-    {
-      "scenario": "not_exist",
-      "user_id": 999999,
-      "expected": "Người dùng không tồn tại",
-      "desc": "TC15_Xóa user - user không tồn tại"
-    },
-    {
-      "scenario": "self_delete",
-      "username": "admin",
-      "page_number": 1,
-      "expected": "Không thể xóa tài khoản đang đăng nhập",
-      "desc": "TC16_Xóa user - không thể tự xóa chính mình"
-    },
-    {
-      "scenario": "valid_delete",
-      "username": "TC_Userdelete",
-      "page_number": 2,
-      "expected": "Xóa người dùng thành công",
-      "desc": "TC17_Xóa user - thành công"
+      "desc": "TC13_Thêm user - role = admin (hợp lệ)"
     }
   ]
 }

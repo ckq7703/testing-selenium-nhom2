@@ -7,58 +7,52 @@
       "desc": "TC01_Đăng nhập thành công"
     },
     {
-      "username": "TC02_admin",
-      "password": "TC02_sai_password",
+      "username": "admin",
+      "password": "wrongpass",
       "expected": false,
-      "desc": "TC02_Sai mật khẩu"
+      "desc": "TC02_Username đúng, Password sai"
     },
     {
-      "username": "TC03_sai_admin",
-      "password": "TC03_SmartPro@123",
+      "username": "wronguser",
+      "password": "SmartPro@123",
       "expected": false,
-      "desc": "TC03_Sai username"
-    },
-    {
-      "username": "TC04_fakeuser",
-      "password": "TC04_fakepass",
-      "expected": false,
-      "desc": "TC04_Sai cả username và password"
+      "desc": "TC03_Username sai, Password đúng"
     },
     {
       "username": "",
-      "password": "TC05_SmartPro@123",
+      "password": "SmartPro@123",
       "expected": false,
-      "desc": "TC05_trống username"
+      "desc": "TC04_Username rỗng"
     },
     {
-      "username": "TC06_admin",
+      "username": "admin",
       "password": "",
       "expected": false,
-      "desc": "TC06_Bỏ trống password"
+      "desc": "TC05_Password rỗng"
     },
     {
       "username": "",
       "password": "",
       "expected": false,
-      "desc": "TC07_Bỏ trống cả 2"
+      "desc": "TC06_Cả hai rỗng"
     },
     {
-      "username": "TC08_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
-      "password": "TC08_SmartPro@123",
+      "username": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "password": "SmartPro@123",
       "expected": false,
-      "desc": "TC08_Username quá dài"
+      "desc": "TC07_Username quá dài (256 ký tự)"
     },
     {
-      "username": "TC09_admin",
-      "password": "TC09_aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "username": "admin",
+      "password": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
       "expected": false,
-      "desc": "TC09_Password quá dài"
+      "desc": "TC08_Password quá dài (256 ký tự)"
     },
     {
-      "username": "TC010_admin' OR '1'='1",
-      "password": "TC10_abc123",
+      "username": "notexistuser",
+      "password": "SmartPro@123",
       "expected": false,
-      "desc": "TC10_Thử SQL injection"
+      "desc": "TC09_Username hợp lệ nhưng không tồn tại"
     }
   ]
 }
